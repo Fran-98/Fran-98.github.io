@@ -10,6 +10,13 @@ body.dark-theme a {
 body.dark-theme .tradeup-item {
     border: 1px solid #333;
     background-color: #1e1e1e;
+    display: flex;
+    flex-direction: column; /* Make sure everything is stacked vertically */
+    padding: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+    overflow: hidden; /* Prevent overflow */
+    position: relative;
 }
 
 body {
@@ -30,23 +37,9 @@ body {
     margin-top: 60px;
 }
 
-.tradeup-item {
-    border: 1px solid #333;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #1e1e1e;
-    display: flex; /* Flex display to arrange inputs and outputs side by side */
-    gap: 20px; /* Space between inputs and outputs */
-    flex-wrap: wrap; /* Allow wrapping if the container is too small */
-}
-
-.tradeup-item img {
-    max-width: 150px;
-    margin-right: 20px;
-}
-
 .tradeup-details {
-    flex-grow: 1;
+    text-align: left;
+    margin-bottom: 20px;
 }
 
 .tradeup-details h2 {
@@ -62,31 +55,13 @@ body {
 }
 
 .tradeup-section {
-    display: flex; /* Flex for the sections */
-    flex-direction: column; /* Keep the section items in a column */
-}
-
-.tradeup-section .item {
-    width: 150px;
-    margin: 5px;
-    text-align: center;
-}
-
-.tradeup-section .item img {
-    max-width: 100px;
-}
-
-.tradeup-details {
-    margin-top: 10px;
-}
-
-.tradeup-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive layout */
+    width: 100%;
 }
 
-.item {
+.tradeup-item .item {
     text-align: center;
 }
 
@@ -105,7 +80,6 @@ body {
 
 .tradeup-item h3 {
     text-align: center;
-    grid-column: 1 / -1;
 }
 
 .tradeup-item .tradeup-header {
@@ -113,17 +87,18 @@ body {
     padding: 10px;
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.tradeup-header h2 {
+.tradeup-item .tradeup-header h2 {
     margin: 0;
 }
 
 .tradeup-item .tradeup-details {
-    text-align: left;
-    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .tradeup-item > div:nth-child(2) {
@@ -135,49 +110,6 @@ body {
     align-self: start;
 }
 
-.tradeup-item .tradeup-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    border-bottom: 1px solid #333;
-    padding: 10px;
-    margin-bottom: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-.tradeup-item .tradeup-header .tradeup-details {
-    grid-column: 1;
-    display: flex;
-    align-items: center;
-}
-
-.tradeup-item .tradeup-header .tradeup-details p {
-    margin-right: 10px;
-}
-
-.tradeup-item .tradeup-header h2 {
-    grid-column: 2;
-    text-align: right;
-    margin: 0;
-}
-
-.tradeup-item > div:nth-child(3) h3,
-.tradeup-item > div:nth-child(4) h3 {
-    margin-top: 0;
-    text-align: center; /* Center horizontally */
-}
-
-.tradeup-item > div:nth-child(3) h3 {
-    grid-column: 1 / 3;
-}
-
-.tradeup-item > div:nth-child(4) h3 {
-    grid-column: 1 / 4;
-}
-
 .tradeup-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -185,21 +117,7 @@ body {
 }
 
 .tradeup-item > div {
-    flex-grow: 1; /* Ensure sections can grow */
-}
-
-.tradeup-item .tradeup-header {
-    display: flex;
-    flex-direction: column;
-}
-
-.tradeup-item > .tradeup-header {
-    display: flex;
-    flex-direction: column;
-}
-
-.tradeup-item > div {
-    flex-grow: 1;
+    flex-grow: 1; /* Make sure sections grow to fill space */
 }
 
 .tradeup-item > .tradeup-header {
@@ -213,4 +131,28 @@ body {
     gap: 10px;
     flex-grow: 1;
     margin-top: 10px;
+}
+
+.tradeup-item .tradeup-details p {
+    margin: 0;
+}
+
+/* Adjust for smaller screens */
+@media screen and (max-width: 768px) {
+    .tradeup-item {
+        padding: 15px;
+    }
+
+    .tradeup-section {
+        grid-template-columns: 1fr; /* Stack inputs and outputs on smaller screens */
+    }
+
+    .tradeup-item .tradeup-header {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .skin-frame img {
+        max-width: 80px;
+    }
 }
