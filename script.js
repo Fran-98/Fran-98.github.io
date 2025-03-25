@@ -31,18 +31,18 @@ function renderTradeups(tradeups) {
         detailsDiv.innerHTML = `
             <p>Odds: ${tradeup.odds_to_profit.toFixed(2)} %</p>
             <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
-            <p>Profitability: ${(tradeup.profitability + 100).toFixed(2)} %</p> // Corrected calculation
+            <p>Profitability: ${(tradeup.profitability + 100).toFixed(2)} %</p>
         `;
 
         const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
         const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost);
 
-        tradeupDiv.innerHTML = `
-            <div class="tradeup-header">
-                ${detailsDiv.outerHTML}
-                ${nameHeading.outerHTML}
-            </div>
-        `;
+        // Corrected header placement
+        const tradeupHeader = document.createElement('div');
+        tradeupHeader.className = 'tradeup-header';
+        tradeupHeader.innerHTML = `${detailsDiv.outerHTML}${nameHeading.outerHTML}`;
+        tradeupDiv.appendChild(tradeupHeader);
+
         tradeupDiv.appendChild(inputsDiv);
         tradeupDiv.appendChild(outputsDiv);
 
