@@ -24,18 +24,17 @@ function renderTradeups(tradeups) {
         tradeupDiv.className = 'tradeup-item';
 
         const nameHeading = document.createElement('h2');
-        nameHeading.textContent = tradeup.name;
+        nameHeading.textContent = `Trade-up: ${tradeup.input_skins[0].collection_name}`;
 
-        const inputsDiv = createTradeUpSection(tradeup.inputs, 'Inputs');
-        const outputsDiv = createTradeUpSection(tradeup.outputs, 'Outputs');
+        const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
+        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true); // isOutput = true
 
         const detailsDiv = document.createElement('div');
         detailsDiv.className = 'tradeup-details';
         detailsDiv.innerHTML = `
-            <p>Profit: $${tradeup.profit.toFixed(2)}</p>
-            <p>Odds: ${tradeup.odds}</p>
-            <p>Cost: $${tradeup.cost.toFixed(2)}</p>
-            <p>Profit per Trade: $${tradeup.profitPerTrade.toFixed(2)}</p>
+            <p>Odds: ${tradeup.odds_to_profit * 100} %</p>
+            <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
+            <p>Profit per Trade: $${tradeup.profitability.toFixed(2)}</p>
         `;
 
         tradeupDiv.appendChild(nameHeading);
@@ -45,6 +44,36 @@ function renderTradeups(tradeups) {
 
         container.appendChild(tradeupDiv);
     });
+}
+
+function createSkinsSection(skins, title, isOutput = false) {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'tradeup-section';
+
+    const titleHeading = document.createElement('h3');
+    titleHeading.textContent = title;
+    sectionDiv.appendChild(titleHeading);
+
+    skins.forEach(skin => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        let price = isOutput ? skin.sell_price : skin.buy_price; // Determine price based on input/output
+        let additionalInfo = '';
+        if (isOutput && skin.chance) {
+            additionalInfo = `<p>Chance: ${skin.chance * 100}%</p>`;
+        }
+        itemDiv.innerHTML = `
+            <img src="${skin.image}" alt="${skin.name}">
+            <p>${skin.name}</p>
+            <p>Collection: ${skin.collection_name}</p>
+            <p>Float: ${skin.float}</p>
+            <p>Price: $${price.toFixed(2)}</p>
+            ${additionalInfo}
+        `;
+        sectionDiv.appendChild(itemDiv);
+    });
+
+    return sectionDiv;
 }
 
 function createTradeUpSection(items, title) {
@@ -72,9 +101,13 @@ function createTradeUpSection(items, title) {
 function sortTradeups(tradeups, sortBy) {
     tradeups.sort((a, b) => {
         if (sortBy === 'odds') {
-            return parseFloat(b.odds) - parseFloat(a.odds);
-        } else {
-            return b[sortBy] - a[sortBy];
+            return b.odds_to_profit - a.odds_to_profit;
+        } else if (sortBy === 'cost'){
+          return b.tradeup_cost - a.tradeup_cost;
+        } else if (sortBy === 'profit'){
+          return b.tradeup_profit - a.tradeup_profit;
+        } else if (sortBy === 'profitPerTrade'){
+          return b.profitability - a.profitability;
         }
     });
     renderTradeups(tradeups);
