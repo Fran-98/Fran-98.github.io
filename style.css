@@ -54,3 +54,33 @@ body {
 .support-section {
     text-align: center;
 }
+
+.tradeup-item {
+    border: 1px solid #333;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #1e1e1e;
+}
+
+.tradeup-item h2 {
+    margin-bottom: 10px;
+}
+
+.tradeup-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tradeup-section .item {
+    width: 150px;
+    margin: 5px;
+    text-align: center;
+}
+
+.tradeup-section .item img {
+    max-width: 100px;
+}
+
+.tradeup-details {
+    margin-top: 10px;
+}

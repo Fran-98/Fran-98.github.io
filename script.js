@@ -7,27 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 const tradeupDiv = document.createElement('div');
                 tradeupDiv.className = 'tradeup-item';
 
-                const image = document.createElement('img');
-                image.src = tradeup.image;
-                image.alt = tradeup.name;
-
-                const detailsDiv = document.createElement('div');
-                detailsDiv.className = 'tradeup-details';
-
                 const nameHeading = document.createElement('h2');
                 nameHeading.textContent = tradeup.name;
 
-                const floatParagraph = document.createElement('p');
-                floatParagraph.textContent = `Float: ${tradeup.float}`;
+                const inputsDiv = createTradeUpSection(tradeup.inputs, 'Inputs');
+                const outputsDiv = createTradeUpSection(tradeup.outputs, 'Outputs');
 
-                const priceParagraph = document.createElement('p');
-                priceParagraph.textContent = `Price: ${tradeup.price}`;
+                const detailsDiv = document.createElement('div');
+                detailsDiv.className = 'tradeup-details';
+                detailsDiv.innerHTML = `
+                    <p>Profit: $${tradeup.profit.toFixed(2)}</p>
+                    <p>Odds: ${tradeup.odds}</p>
+                `;
 
-                detailsDiv.appendChild(nameHeading);
-                detailsDiv.appendChild(floatParagraph);
-                detailsDiv.appendChild(priceParagraph);
-
-                tradeupDiv.appendChild(image);
+                tradeupDiv.appendChild(nameHeading);
+                tradeupDiv.appendChild(inputsDiv);
+                tradeupDiv.appendChild(outputsDiv);
                 tradeupDiv.appendChild(detailsDiv);
 
                 container.appendChild(tradeupDiv);
@@ -35,3 +30,22 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error fetching data:', error));
 });
+
+function createTradeUpSection(items, title) {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'tradeup-section';
+    sectionDiv.innerHTML = `<h3>${title}</h3>`;
+
+    items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        itemDiv.innerHTML = `
+            <img src="${item.image}" alt="item">
+            <p>Float: ${item.float}</p>
+            <p>Price: $${item.price.toFixed(2)}</p>
+        `;
+        sectionDiv.appendChild(itemDiv);
+    });
+
+    return sectionDiv;
+}
