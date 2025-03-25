@@ -66,11 +66,6 @@ body {
     margin-bottom: 10px;
 }
 
-.tradeup-section {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .tradeup-section .item {
     width: 150px;
     margin: 5px;
@@ -83,4 +78,23 @@ body {
 
 .tradeup-details {
     margin-top: 10px;
+}
+.tradeup-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Grid layout for items */
+    gap: 10px; /* Space between items */
+}
+
+.item {
+    text-align: center;
+}
+
+.skin-frame {
+    border: 1px solid #333; /* Frame around each skin */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.skin-frame img {
+    max-width: 100px;
 }
