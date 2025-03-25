@@ -86,12 +86,14 @@ body {
 
 /* Inputs Section - 5x2 Grid */
 .tradeup-item .inputs {
-    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    grid-template-columns: repeat(5, 1fr); /* 5 columns for inputs */
+    grid-gap: 10px; /* Proper gap between items */
 }
 
 /* Outputs Section - 3xN Grid */
 .tradeup-item .outputs {
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for outputs */
+    grid-gap: 10px; /* Proper gap between items */
 }
 
 /* Skin Item Styling */
@@ -102,7 +104,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f9f9f9; /* Default background for non-input skins */
+    background-color: transparent; /* Transparent background for input skins */
 }
 
 .skin-frame img {
@@ -118,7 +120,12 @@ body {
 
 /* Change background color of input skins to dark gray */
 .tradeup-item .inputs .skin-frame {
-    background-color: #333; /* Dark gray background for input skins */
+    background-color: transparent; /* Ensures input skins stay transparent */
+}
+
+/* Change background color of output skins based on profitability */
+.tradeup-item .outputs .skin-frame {
+    background-color: #f9f9f9; /* Default background for output skins */
 }
 
 /* Add hover effect on skin items */
@@ -127,9 +134,9 @@ body {
     cursor: pointer;
 }
 
-/* Adjust hover effect for input skins to stay darker */
+/* Add hover effect for input skins to stay transparent */
 .tradeup-item .inputs .skin-frame:hover {
-    background-color: #444; /* Darker hover effect for input skins */
+    background-color: transparent; /* No hover effect for input skins */
 }
 
 /* Add titles above grids */
@@ -148,11 +155,11 @@ body {
 
     /* Stack the input and output grids on smaller screens */
     .tradeup-item .inputs {
-        grid-template-columns: repeat(3, 1fr); /* Adjust for smaller screen */
+        grid-template-columns: repeat(3, 1fr); /* Adjust for smaller screens */
     }
 
     .tradeup-item .outputs {
-        grid-template-columns: repeat(2, 1fr); /* Adjust for smaller screen */
+        grid-template-columns: repeat(2, 1fr); /* Adjust for smaller screens */
     }
 
     /* Stack the header details vertically on smaller screens */

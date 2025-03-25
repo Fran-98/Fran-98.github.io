@@ -106,6 +106,7 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
     return sectionDiv;
 }
 
+
 function sortTradeups(tradeups, sortBy) {
     tradeups.sort((a, b) => {
         if (sortBy === 'odds') {
