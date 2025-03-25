@@ -107,17 +107,6 @@ body {
     grid-column: 1 / -1;
 }
 
-.tradeup-item .tradeup-details {
-    text-align: left;
-    margin-bottom: 10px;
-    display: flex; /* Use flexbox for horizontal layout */
-    justify-content: space-between; /* Space out the items */
-}
-
-.tradeup-item > div:nth-child(2) {
-    margin-bottom: 20px;
-}
-
 .tradeup-item {
     border: 1px solid #333;
     padding: 10px;
@@ -128,18 +117,27 @@ body {
 
 .tradeup-header {
     border-bottom: 1px solid #333;
-    padding-bottom: 10px;
+    padding: 10px;
     margin-bottom: 10px;
-    display: flex; /* Use flexbox for horizontal layout */
-    justify-content: space-between; /* Space out the items */
-    align-items: center; /* Align items vertically */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .tradeup-header h2 {
     margin: 0; /* Remove default margin */
 }
 
+.tradeup-item .tradeup-details {
+    text-align: left;
+    margin-left: 0; /* Align to the left */
+}
+
+.tradeup-item > div:nth-child(2) {
+    margin-bottom: 20px;
+}
+
 .tradeup-item > div:nth-child(3),
 .tradeup-item > div:nth-child(4) {
-    align-self: start; /* Align grids to the top */
+    align-self: start;
 }
