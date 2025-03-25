@@ -28,7 +28,7 @@ function renderTradeups(tradeups) {
 
         const detailsDiv = document.createElement('div');
         detailsDiv.className = 'tradeup-details';
-        detailsDiv.innerHTML = `
+        detailsDiv.innerHTML = `        
             <p>Odds: ${tradeup.odds_to_profit.toFixed(2)} %</p>
             <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
             <p>Profitability: ${(tradeup.profitability + 100).toFixed(2)} %</p>
@@ -37,18 +37,25 @@ function renderTradeups(tradeups) {
         const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
         const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost);
 
-        // Corrected header placement
+        // Create header with general info
         const tradeupHeader = document.createElement('div');
         tradeupHeader.className = 'tradeup-header';
         tradeupHeader.innerHTML = `${detailsDiv.outerHTML}${nameHeading.outerHTML}`;
         tradeupDiv.appendChild(tradeupHeader);
 
-        tradeupDiv.appendChild(inputsDiv);
-        tradeupDiv.appendChild(outputsDiv);
+        // Add inputs and outputs side by side
+        const sectionsContainer = document.createElement('div');
+        sectionsContainer.style.display = 'flex'; // Side by side layout
+        sectionsContainer.style.gap = '20px'; // Space between the sections
+        sectionsContainer.appendChild(inputsDiv);
+        sectionsContainer.appendChild(outputsDiv);
+
+        tradeupDiv.appendChild(sectionsContainer);
 
         container.appendChild(tradeupDiv);
     });
 }
+
 
 function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
     const sectionDiv = document.createElement('div');
