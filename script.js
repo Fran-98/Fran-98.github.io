@@ -75,7 +75,7 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
         }
         let frameBackground = '';
         if (isOutput && tradeupCost !== 0) {
-            frameBackground = (skin.sell_price > (tradeupCost / 10)) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)'; // Color based on profitability
+            frameBackground = (skin.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)'; // Color based on profitability
         }
         itemDiv.innerHTML = `
             <div class="skin-frame" style="background-color: ${frameBackground};">
