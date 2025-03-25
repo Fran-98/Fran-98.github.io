@@ -40,9 +40,9 @@
           { "image": "https://example.com/output1.png", "float": "0.00-0.15", "price": 100.00 },
           { "image": "https://example.com/output2.png", "float": "0.15-0.38", "price": 50.00 }
       ],
-      "profit": 100.00,
-      "odds": "20%",
-      "cost": 50.00,
-      "profitPerTrade": 10.00
+      "profit": 10.00,
+      "odds": "30%",
+      "cost": 10.00,
+      "profitPerTrade": 1000.00
   }
 ]
