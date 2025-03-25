@@ -50,7 +50,10 @@ function renderTradeups(tradeups) {
 function createTradeUpSection(items, title) {
     const sectionDiv = document.createElement('div');
     sectionDiv.className = 'tradeup-section';
-    sectionDiv.innerHTML = `<h3>${title}</h3>`;
+
+    const titleHeading = document.createElement('h3');
+    titleHeading.textContent = title;
+    sectionDiv.appendChild(titleHeading); // Corrected line
 
     items.forEach(item => {
         const itemDiv = document.createElement('div');
