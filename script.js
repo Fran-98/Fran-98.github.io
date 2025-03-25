@@ -65,19 +65,17 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
     const sectionDiv = document.createElement('div');
     sectionDiv.className = 'tradeup-section';
 
+    // Create the title for the section
     const titleHeading = document.createElement('h3');
+    titleHeading.className = 'section-title'; // Add section-title class
     titleHeading.textContent = title;
     sectionDiv.appendChild(titleHeading);
 
     // Apply different grid layouts based on input/output
     if (isOutput) {
-        sectionDiv.style.display = 'grid';
         sectionDiv.style.gridTemplateColumns = 'repeat(3, 1fr)'; // 3 columns for output
-        sectionDiv.style.gridAutoRows = 'auto'; // Allow auto rows based on content
     } else {
-        sectionDiv.style.display = 'grid';
         sectionDiv.style.gridTemplateColumns = 'repeat(5, 1fr)'; // 5 columns for input
-        sectionDiv.style.gridAutoRows = 'auto'; // Allow auto rows based on content
     }
 
     skins.forEach(skin => {
@@ -90,7 +88,7 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
         }
         let frameBackground = '';
         if (isOutput && tradeupCost !== 0) {
-            frameBackground = (skin.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)'; // Color based on profitability
+            frameBackground = (skin.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)';
         }
         itemDiv.innerHTML = `
             <div class="skin-frame" style="background-color: ${frameBackground};">

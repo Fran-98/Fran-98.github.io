@@ -77,7 +77,8 @@ body {
 }
 
 /* Inputs and Outputs Section */
-.tradeup-section {
+.tradeup-item .inputs,
+.tradeup-item .outputs {
     display: grid;
     gap: 10px;
     width: 100%;
@@ -85,16 +86,12 @@ body {
 
 /* Inputs Section - 5x2 Grid */
 .tradeup-item .inputs {
-    display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 columns */
-    gap: 10px;
 }
 
 /* Outputs Section - 3xN Grid */
 .tradeup-item .outputs {
-    display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    gap: 10px;
 }
 
 /* Skin Item Styling */
@@ -105,7 +102,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Default background for non-input skins */
 }
 
 .skin-frame img {
@@ -119,14 +116,28 @@ body {
     text-align: center;
 }
 
+/* Change background color of input skins to dark gray */
+.tradeup-item .inputs .skin-frame {
+    background-color: #333; /* Dark gray background for input skins */
+}
+
 /* Add hover effect on skin items */
 .skin-frame:hover {
     background-color: #f0f0f0;
     cursor: pointer;
 }
 
-.tradeup-item .item {
+/* Adjust hover effect for input skins to stay darker */
+.tradeup-item .inputs .skin-frame:hover {
+    background-color: #444; /* Darker hover effect for input skins */
+}
+
+/* Add titles above grids */
+.tradeup-item .section-title {
+    font-size: 1.2em;
+    font-weight: bold;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 /* Media Query for Smaller Screens */
