@@ -108,10 +108,18 @@ body {
 }
 
 .tradeup-item .tradeup-details {
-    text-align: left; /* Align details to the left */
+    text-align: left;
     margin-bottom: 10px;
 }
 
-.tradeup-item > div:nth-child(3) {
-    margin-bottom: 20px; /* Space between input and output grids */
+.tradeup-item > div:nth-child(2) {
+    margin-bottom: 20px;
+}
+
+.tradeup-header {
+    border: 1px solid #333;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    grid-column: 1 / -1; /* Span all columns */
 }
