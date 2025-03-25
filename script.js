@@ -54,6 +54,13 @@ function createSkinsSection(skins, title, isOutput = false) {
     titleHeading.textContent = title;
     sectionDiv.appendChild(titleHeading);
 
+    // Apply different grid layouts based on input/output
+    if (isOutput) {
+        sectionDiv.style.gridTemplateColumns = 'repeat(3, 1fr)'; // 3 columns for output
+    } else {
+        sectionDiv.style.gridTemplateColumns = 'repeat(5, 1fr)'; // 5 columns for input
+    }
+
     skins.forEach(skin => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'item';
