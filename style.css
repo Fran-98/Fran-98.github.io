@@ -77,11 +77,15 @@ body {
 }
 
 /* Inputs and Outputs Section */
-.tradeup-item .inputs,
+.tradeup-item .inputs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns for inputs */
+    grid-gap: 10px; /* Proper gap between items */
+}
 .tradeup-item .outputs {
     display: grid;
-    gap: 10px;
-    width: 100%;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for outputs */
+    grid-gap: 10px; /* Proper gap between items */
 }
 
 /* Inputs Section - 5x2 Grid */
