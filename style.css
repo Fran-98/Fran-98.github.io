@@ -141,3 +141,21 @@ body {
 .tradeup-item > div:nth-child(4) {
     align-self: start;
 }
+
+.tradeup-item .tradeup-header {
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: space-between; /* Space out the items */
+    align-items: center; /* Align items vertically */
+    border-bottom: 1px solid #333;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.tradeup-item .tradeup-header h2 {
+    margin: 0; /* Remove default margin */
+}
+
+.tradeup-item .tradeup-details {
+    text-align: left;
+    margin-left: 0; /* Align to the left */
+}
