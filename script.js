@@ -25,7 +25,7 @@ function renderTradeups(tradeups) {
 
         // Add Tradeup Name (Tradeup-X)
         const nameHeading = document.createElement('h2');
-        nameHeading.textContent = `Tradeup-${index + 1}`;
+        nameHeading.textContent = `Tradeup-N°${index + 1}`;
 
         // Add general details (Odds, Cost, Profitability) horizontally
         const detailsDiv = document.createElement('div');
@@ -34,6 +34,7 @@ function renderTradeups(tradeups) {
             <p><strong>Odds:</strong> ${tradeup.odds_to_profit.toFixed(2)} %</p>
             <p><strong>Cost:</strong> $${tradeup.tradeup_cost.toFixed(2)}</p>
             <p><strong>Profitability:</strong> ${(tradeup.profitability + 100).toFixed(2)} %</p>
+            <p><strong>Profit per trade:</strong> $${(tradeup.tradeup_profit).toFixed(2)}</p>
         `;
 
         // Create inputs and outputs sections
@@ -110,9 +111,9 @@ function sortTradeups(tradeups, sortBy) {
             return b.odds_to_profit - a.odds_to_profit;
         } else if (sortBy === 'cost') {
             return b.tradeup_cost - a.tradeup_cost;
-        } else if (sortBy === 'profit') {
-            return b.tradeup_profit - a.tradeup_profit;
         } else if (sortBy === 'profitPerTrade') {
+            return b.tradeup_profit - a.tradeup_profit;
+        } else if (sortBy === 'profitability') {
             return b.profitability - a.profitability;
         }
     });
