@@ -2,12 +2,16 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
-            renderTradeups(data);
+            // Store the fetched data in a variable for later use.
+            let tradeupData = data;
+
+            // Render the trade-ups with the initial data.
+            renderTradeups(tradeupData);
 
             const sortBySelect = document.getElementById('sort-by');
             sortBySelect.addEventListener('change', function() {
                 const sortBy = sortBySelect.value;
-                sortTradeups(data, sortBy);
+                sortTradeups(tradeupData, sortBy); // Pass the stored data
             });
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -46,7 +50,22 @@ function renderTradeups(tradeups) {
 }
 
 function createTradeUpSection(items, title) {
-    // ... (Same as before) ...
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'tradeup-section';
+    sectionDiv.innerHTML = `<h3>${title}</h3>`;
+
+    items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        itemDiv.innerHTML = `
+            <img src="${item.image}" alt="item">
+            <p>Float: ${item.float}</p>
+            <p>Price: $${item.price.toFixed(2)}</p>
+        `;
+        sectionDiv.appendChild(itemDiv);
+    });
+
+    return sectionDiv;
 }
 
 function sortTradeups(tradeups, sortBy) {
@@ -57,5 +76,5 @@ function sortTradeups(tradeups, sortBy) {
             return b[sortBy] - a[sortBy];
         }
     });
-    renderTradeups(tradeups);
+    renderTradeups(tradeups); // Re-render with the sorted data
 }
