@@ -116,10 +116,22 @@ body {
     margin-bottom: 20px;
 }
 
-.tradeup-header {
-    border: 1px solid #333;
+.tradeup-item {
+    border: 1px solid #333; /* Keep the border around the whole section */
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    background-color: #1e1e1e;
+    position: relative; /* Needed for absolute positioning */
+}
+
+.tradeup-header {
+    border-bottom: 1px solid #333; /* Only a bottom border */
+    padding-bottom: 10px; /* Space below the header */
+    margin-bottom: 10px; /* Space before the input grid */
     text-align: center;
-    grid-column: 1 / -1; /* Span all columns */
+    grid-column: 1 / -1;
+}
+
+.tradeup-header h2 {
+    margin-bottom: 5px; /* Space below the Tradeup name */
 }

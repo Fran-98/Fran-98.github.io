@@ -29,20 +29,16 @@ function renderTradeups(tradeups) {
         const detailsDiv = document.createElement('div');
         detailsDiv.className = 'tradeup-details';
         detailsDiv.innerHTML = `
-            <p>Odds: ${(tradeup.odds_to_profit * 100).toFixed(2)} %</p>
+            <p>Odds: ${tradeup.odds_to_profit.toFixed(2)} %</p>
             <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
-            <p>Profit per Trade: $${tradeup.profitability.toFixed(2)}</p>
+            <p>Profitability: ${(tradeup.profitability - 100).toFixed(2)} %</p>
         `;
 
         const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
         const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost); // Pass tradeup cost for coloring
 
-        tradeupDiv.innerHTML = `
-            <div class="tradeup-header">
-                ${nameHeading.outerHTML}
-                ${detailsDiv.outerHTML}
-            </div>
-        `;
+        tradeupDiv.appendChild(nameHeading);
+        tradeupDiv.appendChild(detailsDiv);
         tradeupDiv.appendChild(inputsDiv);
         tradeupDiv.appendChild(outputsDiv);
 
