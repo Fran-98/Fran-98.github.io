@@ -19,28 +19,28 @@ function renderTradeups(tradeups) {
     const container = document.getElementById('tradeups-container');
     container.innerHTML = '';
 
-    tradeups.forEach(tradeup => {
+    tradeups.forEach((tradeup, index) => {
         const tradeupDiv = document.createElement('div');
         tradeupDiv.className = 'tradeup-item';
 
         const nameHeading = document.createElement('h2');
-        nameHeading.textContent = `Trade-up: ${tradeup.input_skins[0].collection_name}`;
-
-        const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
-        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true);
+        nameHeading.textContent = `Tradeup-${index + 1}`; // Tradeup number
 
         const detailsDiv = document.createElement('div');
         detailsDiv.className = 'tradeup-details';
         detailsDiv.innerHTML = `
-            <p>Odds: ${(tradeup.odds_to_profit).toFixed(2)} %</p>
+            <p>Odds: ${(tradeup.odds_to_profit * 100).toFixed(2)} %</p>
             <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
             <p>Profit per Trade: $${tradeup.profitability.toFixed(2)}</p>
         `;
 
+        const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
+        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true);
+
         tradeupDiv.appendChild(nameHeading);
+        tradeupDiv.appendChild(detailsDiv); // Details under name
         tradeupDiv.appendChild(inputsDiv);
         tradeupDiv.appendChild(outputsDiv);
-        tradeupDiv.appendChild(detailsDiv);
 
         container.appendChild(tradeupDiv);
     });
