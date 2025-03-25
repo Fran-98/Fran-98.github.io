@@ -1,49 +1,48 @@
 [
-    {
+  {
       "name": "Trade-up 1",
       "inputs": [
-        { "image": "input1.png", "float": "0.00-0.10", "price": 5.00 },
-        { "image": "input2.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input3.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input4.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input5.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input6.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input7.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input8.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input9.png", "float": "0.10-0.20", "price": 5.50 },
-        { "image": "input10.png", "float": "0.10-0.20", "price": 5.50 }
+          { "image": "https://example.com/input1.png", "float": "0.00-0.10", "price": 5.00 },
+          { "image": "https://example.com/input2.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input3.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input4.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input5.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input6.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input7.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input8.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input9.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input10.png", "float": "0.10-0.20", "price": 5.50 }
       ],
       "outputs": [
-        { "image": "output1.png", "float": "0.00-0.15", "price": 100.00 },
-        { "image": "output2.png", "float": "0.15-0.38", "price": 50.00 }
+          { "image": "https://example.com/output1.png", "float": "0.00-0.15", "price": 100.00 },
+          { "image": "https://example.com/output2.png", "float": "0.15-0.38", "price": 50.00 }
       ],
       "profit": 100.00,
       "odds": "20%",
       "cost": 50.00,
-        "profitPerTrade": 10.00
-    },
-    {
-        "name": "Trade-up 1",
-        "inputs": [
-          { "image": "input1.png", "float": "0.00-0.10", "price": 5.00 },
-          { "image": "input2.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input3.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input4.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input5.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input6.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input7.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input8.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input9.png", "float": "0.10-0.20", "price": 5.50 },
-          { "image": "input10.png", "float": "0.10-0.20", "price": 5.50 }
-        ],
-        "outputs": [
-          { "image": "output1.png", "float": "0.00-0.15", "price": 100.00 },
-          { "image": "output2.png", "float": "0.15-0.38", "price": 50.00 }
-        ],
-        "profit": 100.00,
-        "odds": "20%",
-        "cost": 50.00,
-        "profitPerTrade": 10.00
-      }
-
-  ]
+      "profitPerTrade": 10.00
+  },
+  {
+      "name": "Trade-up 2",
+      "inputs": [
+          { "image": "https://example.com/input1.png", "float": "0.00-0.10", "price": 5.00 },
+          { "image": "https://example.com/input2.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input3.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input4.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input5.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input6.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input7.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input8.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input9.png", "float": "0.10-0.20", "price": 5.50 },
+          { "image": "https://example.com/input10.png", "float": "0.10-0.20", "price": 5.50 }
+      ],
+      "outputs": [
+          { "image": "https://example.com/output1.png", "float": "0.00-0.15", "price": 100.00 },
+          { "image": "https://example.com/output2.png", "float": "0.15-0.38", "price": 50.00 }
+      ],
+      "profit": 100.00,
+      "odds": "20%",
+      "cost": 50.00,
+      "profitPerTrade": 10.00
+  }
+]
