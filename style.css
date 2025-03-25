@@ -83,6 +83,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
+    margin-bottom: 20px; /* Space between input and output grids */
 }
 
 .item {
@@ -103,6 +104,6 @@ body {
 }
 
 .tradeup-item h3 {
-    text-align: center; /* Center the Inputs/Outputs headers */
-    grid-column: 1 / -1; /* Span all columns */
+    text-align: center;
+    grid-column: 1 / -1;
 }

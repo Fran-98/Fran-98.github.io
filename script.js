@@ -24,7 +24,10 @@ function renderTradeups(tradeups) {
         tradeupDiv.className = 'tradeup-item';
 
         const nameHeading = document.createElement('h2');
-        nameHeading.textContent = `Tradeup-${index + 1}`; // Tradeup number
+        nameHeading.textContent = `Tradeup-${index + 1}`;
+
+        const profit = tradeup.output_skins.reduce((total, skin) => total + skin.sell_price, 0) - tradeup.tradeup_cost;
+        const profitColor = profit > 0 ? 'green' : 'red';
 
         const detailsDiv = document.createElement('div');
         detailsDiv.className = 'tradeup-details';
@@ -32,13 +35,14 @@ function renderTradeups(tradeups) {
             <p>Odds: ${(tradeup.odds_to_profit * 100).toFixed(2)} %</p>
             <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
             <p>Profit per Trade: $${tradeup.profitability.toFixed(2)}</p>
+            <p style="color: ${profitColor};">Profit: $${profit.toFixed(2)}</p>
         `;
 
         const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
-        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true);
+        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, profit);
 
         tradeupDiv.appendChild(nameHeading);
-        tradeupDiv.appendChild(detailsDiv); // Details under name
+        tradeupDiv.appendChild(detailsDiv);
         tradeupDiv.appendChild(inputsDiv);
         tradeupDiv.appendChild(outputsDiv);
 
@@ -46,7 +50,7 @@ function renderTradeups(tradeups) {
     });
 }
 
-function createSkinsSection(skins, title, isOutput = false) {
+function createSkinsSection(skins, title, isOutput = false, profit = 0) {
     const sectionDiv = document.createElement('div');
     sectionDiv.className = 'tradeup-section';
 
@@ -69,8 +73,9 @@ function createSkinsSection(skins, title, isOutput = false) {
         if (isOutput && skin.chance) {
             additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
         }
+        let frameBackground = profit > 0 ? 'lightgreen' : 'lightcoral';
         itemDiv.innerHTML = `
-            <div class="skin-frame">
+            <div class="skin-frame" style="background-color: ${isOutput && profit !== 0 ? frameBackground : ''};">
                 <img src="${skin.image}" alt="${skin.name}">
                 <p>${skin.name}</p>
                 <p>Collection: ${skin.collection_name}</p>
