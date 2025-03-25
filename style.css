@@ -12,16 +12,22 @@ body.dark-theme .tradeup-item {
     background-color: #1e1e1e;
 }
 
-body.dark-theme .support-section {
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    margin-top: 20px;
-    text-align: center;
-}
-
 body {
     font-family: sans-serif;
-    margin: 20px;
+    margin: 0;
+}
+
+.topbar {
+    background-color: #1e1e1e;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.content {
+    padding: 20px;
+    margin-top: 60px; /* Adjust based on topbar height */
 }
 
 .tradeup-item {
@@ -45,7 +51,6 @@ body {
     margin-top: 0;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
+.support-section {
+    text-align: center;
 }
