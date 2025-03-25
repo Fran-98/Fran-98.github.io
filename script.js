@@ -31,14 +31,18 @@ function renderTradeups(tradeups) {
         detailsDiv.innerHTML = `
             <p>Odds: ${tradeup.odds_to_profit.toFixed(2)} %</p>
             <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
-            <p>Profitability: ${(tradeup.profitability - 100).toFixed(2)} %</p>
+            <p>Profitability: ${(tradeup.profitability + 100).toFixed(2)} %</p> // Corrected calculation
         `;
 
         const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
-        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost); // Pass tradeup cost for coloring
+        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost);
 
-        tradeupDiv.appendChild(nameHeading);
-        tradeupDiv.appendChild(detailsDiv);
+        tradeupDiv.innerHTML = `
+            <div class="tradeup-header">
+                ${detailsDiv.outerHTML}
+                ${nameHeading.outerHTML}
+            </div>
+        `;
         tradeupDiv.appendChild(inputsDiv);
         tradeupDiv.appendChild(outputsDiv);
 
@@ -71,7 +75,7 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
         }
         let frameBackground = '';
         if (isOutput && tradeupCost !== 0) {
-            frameBackground = (skin.sell_price - (tradeupCost / 10)) > 0 ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)'; // Color based on profitability
+            frameBackground = (skin.sell_price > (tradeupCost / 10)) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)'; // Color based on profitability
         }
         itemDiv.innerHTML = `
             <div class="skin-frame" style="background-color: ${frameBackground};">
