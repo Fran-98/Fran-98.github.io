@@ -26,8 +26,8 @@ function renderTradeups(tradeups) {
         const nameHeading = document.createElement('h2');
         nameHeading.textContent = `Tradeup-${index + 1}`;
 
-        const profit = tradeup.output_skins.reduce((total, skin) => total + skin.sell_price, 0) - tradeup.tradeup_cost;
-        const profitColor = profit > 0 ? 'green' : 'red';
+        const profit = tradeup.output_skins.reduce((total, skin) => total + skin.sell_price * skin.chance, 0) - tradeup.tradeup_cost;
+        const profitColor = profit > 0 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'; // Less bright green/red
 
         const detailsDiv = document.createElement('div');
         detailsDiv.className = 'tradeup-details';
@@ -35,14 +35,14 @@ function renderTradeups(tradeups) {
             <p>Odds: ${(tradeup.odds_to_profit * 100).toFixed(2)} %</p>
             <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
             <p>Profit per Trade: $${tradeup.profitability.toFixed(2)}</p>
-            <p style="color: ${profitColor};">Profit: $${profit.toFixed(2)}</p>
+            <p style="color: ${profit > 0 ? 'green' : 'red'};">Profit: $${profit.toFixed(2)}</p>
         `;
 
         const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
         const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, profit);
 
         tradeupDiv.appendChild(nameHeading);
-        tradeupDiv.appendChild(detailsDiv);
+        tradeupDiv.appendChild(detailsDiv); // Details under name
         tradeupDiv.appendChild(inputsDiv);
         tradeupDiv.appendChild(outputsDiv);
 
@@ -73,7 +73,7 @@ function createSkinsSection(skins, title, isOutput = false, profit = 0) {
         if (isOutput && skin.chance) {
             additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
         }
-        let frameBackground = profit > 0 ? 'lightgreen' : 'lightcoral';
+        let frameBackground = profit > 0 ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)'; // Less bright green/red
         itemDiv.innerHTML = `
             <div class="skin-frame" style="background-color: ${isOutput && profit !== 0 ? frameBackground : ''};">
                 <img src="${skin.image}" alt="${skin.name}">
