@@ -1,0 +1,25 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+.tradeup-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.tradeup-item img {
+    max-width: 150px;
+    margin-right: 20px;
+}
+
+.tradeup-details {
+    flex-grow: 1;
+}
+
+.tradeup-details h2 {
+    margin-top: 0;
+}

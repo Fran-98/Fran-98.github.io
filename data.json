@@ -1,0 +1,14 @@
+[
+    {
+      "name": "Trade-up 1",
+      "image": "https://example.com/images/gun1.png",
+      "float": "0.00 - 0.15",
+      "price": "$100.00"
+    },
+    {
+      "name": "Trade-up 2",
+      "image": "https://example.com/images/gun2.png",
+      "float": "0.15 - 0.38",
+      "price": "$50.00"
+    }
+  ]
