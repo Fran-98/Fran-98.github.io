@@ -79,6 +79,7 @@ body {
 .tradeup-details {
     margin-top: 10px;
 }
+
 .tradeup-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -125,12 +126,12 @@ body {
 }
 
 .tradeup-header h2 {
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 
 .tradeup-item .tradeup-details {
     text-align: left;
-    margin-left: 0; /* Align to the left */
+    margin-left: 0;
 }
 
 .tradeup-item > div:nth-child(2) {
@@ -143,19 +144,31 @@ body {
 }
 
 .tradeup-item .tradeup-header {
-    display: flex; /* Use flexbox for horizontal layout */
-    justify-content: space-between; /* Space out the items */
+    display: grid; /* Use grid for layout */
+    grid-template-columns: 1fr auto; /* Details on the left, name on the right */
     align-items: center; /* Align items vertically */
     border-bottom: 1px solid #333;
     padding: 10px;
     margin-bottom: 10px;
 }
 
-.tradeup-item .tradeup-header h2 {
-    margin: 0; /* Remove default margin */
+.tradeup-item .tradeup-header .tradeup-details {
+    grid-column: 1; /* Details on the left column */
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Align items vertically */
 }
 
-.tradeup-item .tradeup-details {
-    text-align: left;
-    margin-left: 0; /* Align to the left */
+.tradeup-item .tradeup-header .tradeup-details p {
+    margin-right: 10px; /* Space between paragraphs */
+}
+
+.tradeup-item .tradeup-header h2 {
+    grid-column: 2; /* Name on the right column */
+    text-align: right; /* Align name to the right */
+    margin: 0;
+}
+
+.tradeup-item > div:nth-child(3) h3,
+.tradeup-item > div:nth-child(4) h3 {
+    margin-top: 0; /* Align titles to the top */
 }
