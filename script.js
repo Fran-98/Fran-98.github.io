@@ -62,17 +62,17 @@ function renderTradeups(tradeups) {
 }
 
 function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
-    const sectionDiv = document.createElement('div');
-    sectionDiv.className = `tradeup-section ${isOutput ? 'outputs' : 'inputs'}`; // Add class for inputs/outputs
+    const sectionContainer = document.createElement('div');
+    sectionContainer.className = 'tradeup-section-container';
 
     // Create the title for the section
     const titleHeading = document.createElement('h3');
     titleHeading.className = 'section-title';
     titleHeading.textContent = title;
-    sectionDiv.appendChild(titleHeading);
+    sectionContainer.appendChild(titleHeading);
 
-    // Remove inline grid style setting
-    // sectionDiv.style.gridTemplateColumns = ...; // Remove this line
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = `tradeup-section ${isOutput ? 'outputs' : 'inputs'}`; 
 
     skins.forEach(skin => {
         const itemDiv = document.createElement('div');
@@ -99,7 +99,8 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
         sectionDiv.appendChild(itemDiv);
     });
 
-    return sectionDiv;
+    sectionContainer.appendChild(sectionDiv);
+    return sectionContainer;
 }
 
 

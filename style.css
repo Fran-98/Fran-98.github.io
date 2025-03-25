@@ -39,6 +39,21 @@ body {
     margin-top: 60px;
 }
 
+/* Tradeup Section Container */
+.tradeup-section-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 /* Tradeup Item */
 .tradeup-item {
     display: flex;
@@ -77,15 +92,10 @@ body {
 }
 
 /* Inputs and Outputs Section */
-.tradeup-item .inputs {
+.tradeup-section {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 columns for inputs */
-    grid-gap: 10px; /* Proper gap between items */
-}
-.tradeup-item .outputs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for outputs */
-    grid-gap: 10px; /* Proper gap between items */
+    gap: 10px;
+    width: 100%;
 }
 
 /* Inputs Section - 5x2 Grid */
@@ -141,14 +151,6 @@ body {
 /* Add hover effect for input skins to stay transparent */
 .tradeup-item .inputs .skin-frame:hover {
     background-color: transparent; /* No hover effect for input skins */
-}
-
-/* Add titles above grids */
-.tradeup-item .section-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px;
 }
 
 /* Media Query for Smaller Screens */
