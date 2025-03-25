@@ -1,3 +1,24 @@
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-theme a {
+    color: #81d4fa;
+}
+
+body.dark-theme .tradeup-item {
+    border: 1px solid #333;
+    background-color: #1e1e1e;
+}
+
+body.dark-theme .support-section {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
 body {
     font-family: sans-serif;
     margin: 20px;
@@ -22,4 +43,9 @@ body {
 
 .tradeup-details h2 {
     margin-top: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
 }
