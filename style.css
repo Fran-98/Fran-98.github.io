@@ -1,3 +1,4 @@
+/* Dark Theme Styles */
 body.dark-theme {
     background-color: #121212;
     color: #e0e0e0;
@@ -11,7 +12,7 @@ body.dark-theme .tradeup-item {
     border: 1px solid #333;
     background-color: #1e1e1e;
     display: flex;
-    flex-direction: column; /* Make sure everything is stacked vertically */
+    flex-direction: column; /* Stack everything vertically */
     padding: 20px;
     margin-bottom: 20px;
     gap: 20px;
@@ -19,6 +20,7 @@ body.dark-theme .tradeup-item {
     position: relative;
 }
 
+/* General Body and Layout */
 body {
     font-family: sans-serif;
     margin: 0;
@@ -37,34 +39,65 @@ body {
     margin-top: 60px;
 }
 
-.tradeup-details {
-    text-align: left;
+/* Tradeup Item */
+.tradeup-item {
+    display: flex;
+    flex-direction: column; /* Stack the contents vertically */
+    padding: 20px;
     margin-bottom: 20px;
-}
-
-.tradeup-details h2 {
-    margin-top: 0;
-}
-
-.support-section {
-    text-align: center;
+    border-radius: 8px;
+    background-color: #fff;
+    gap: 20px;
+    position: relative;
 }
 
 .tradeup-item h2 {
     margin-bottom: 10px;
+    font-size: 1.5em;
 }
 
+.tradeup-item .tradeup-header {
+    display: flex;
+    flex-direction: row; /* Align details horizontally */
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.tradeup-item .tradeup-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+
+.tradeup-item .tradeup-details p {
+    margin: 0;
+}
+
+/* Inputs and Outputs Section */
 .tradeup-section {
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive layout */
+    gap: 10px;
     width: 100%;
 }
 
-.tradeup-item .item {
-    text-align: center;
+/* Inputs Section - 5x2 Grid */
+.tradeup-item .inputs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 10px;
 }
 
+/* Outputs Section - 3xN Grid */
+.tradeup-item .outputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px;
+}
+
+/* Skin Item Styling */
 .skin-frame {
     border: 1px solid #333;
     padding: 10px;
@@ -72,84 +105,49 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #f9f9f9;
 }
 
 .skin-frame img {
     max-width: 100px;
+    height: auto;
+    margin-bottom: 10px;
 }
 
-.tradeup-item h3 {
+.skin-frame p {
+    margin: 5px 0;
     text-align: center;
 }
 
-.tradeup-item .tradeup-header {
-    border-bottom: 1px solid #333;
-    padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* Add hover effect on skin items */
+.skin-frame:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
 }
 
-.tradeup-item .tradeup-header h2 {
-    margin: 0;
+.tradeup-item .item {
+    text-align: center;
 }
 
-.tradeup-item .tradeup-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.tradeup-item > div:nth-child(2) {
-    margin-bottom: 20px;
-}
-
-.tradeup-item > div:nth-child(3),
-.tradeup-item > div:nth-child(4) {
-    align-self: start;
-}
-
-.tradeup-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.tradeup-item > div {
-    flex-grow: 1; /* Make sure sections grow to fill space */
-}
-
-.tradeup-item > .tradeup-header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.tradeup-item .tradeup-section {
-    flex-direction: row;
-    display: flex;
-    gap: 10px;
-    flex-grow: 1;
-    margin-top: 10px;
-}
-
-.tradeup-item .tradeup-details p {
-    margin: 0;
-}
-
-/* Adjust for smaller screens */
+/* Media Query for Smaller Screens */
 @media screen and (max-width: 768px) {
     .tradeup-item {
         padding: 15px;
     }
 
-    .tradeup-section {
-        grid-template-columns: 1fr; /* Stack inputs and outputs on smaller screens */
+    /* Stack the input and output grids on smaller screens */
+    .tradeup-item .inputs {
+        grid-template-columns: repeat(3, 1fr); /* Adjust for smaller screen */
     }
 
+    .tradeup-item .outputs {
+        grid-template-columns: repeat(2, 1fr); /* Adjust for smaller screen */
+    }
+
+    /* Stack the header details vertically on smaller screens */
     .tradeup-item .tradeup-header {
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
     }
 
     .skin-frame img {

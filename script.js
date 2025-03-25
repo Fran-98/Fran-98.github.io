@@ -27,17 +27,17 @@ function renderTradeups(tradeups) {
         const nameHeading = document.createElement('h2');
         nameHeading.textContent = `Tradeup-${index + 1}`;
 
-        // Add general details (Odds, Cost, Profitability)
+        // Add general details (Odds, Cost, Profitability) horizontally
         const detailsDiv = document.createElement('div');
         detailsDiv.className = 'tradeup-details';
         detailsDiv.innerHTML = `        
-            <p>Odds: ${tradeup.odds_to_profit.toFixed(2)} %</p>
-            <p>Cost: $${tradeup.tradeup_cost.toFixed(2)}</p>
-            <p>Profitability: ${(tradeup.profitability + 100).toFixed(2)} %</p>
+            <p><strong>Odds:</strong> ${tradeup.odds_to_profit.toFixed(2)} %</p>
+            <p><strong>Cost:</strong> $${tradeup.tradeup_cost.toFixed(2)}</p>
+            <p><strong>Profitability:</strong> ${(tradeup.profitability + 100).toFixed(2)} %</p>
         `;
 
         // Create inputs and outputs sections
-        const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs');
+        const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs', false);
         const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost);
 
         // Create header with general info (name and tradeup details)
@@ -71,9 +71,13 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
 
     // Apply different grid layouts based on input/output
     if (isOutput) {
+        sectionDiv.style.display = 'grid';
         sectionDiv.style.gridTemplateColumns = 'repeat(3, 1fr)'; // 3 columns for output
+        sectionDiv.style.gridAutoRows = 'auto'; // Allow auto rows based on content
     } else {
+        sectionDiv.style.display = 'grid';
         sectionDiv.style.gridTemplateColumns = 'repeat(5, 1fr)'; // 5 columns for input
+        sectionDiv.style.gridAutoRows = 'auto'; // Allow auto rows based on content
     }
 
     skins.forEach(skin => {
