@@ -1,18 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            console.log("Data fetched:", data); // Check if data is fetched
-            let tradeupData = data;
-            renderTradeups(tradeupData);
+    // Array to hold all tradeup data
+    let allTradeupData = [];
 
-            const sortBySelect = document.getElementById('sort-by');
-            sortBySelect.addEventListener('change', function() {
-                const sortBy = sortBySelect.value;
-                sortTradeups(tradeupData, sortBy);
+    // Function to get all JSON files in the tradeups_data folder
+    function getJsonFiles() {
+        return fetch('tradeups_data/')
+            .then(response => response.text())
+            .then(text => {
+                // Parse the directory listing to extract JSON file names
+                const parser = new DOMParser();
+                const html = parser.parseFromString(text, 'text/html');
+                const links = Array.from(html.getElementsByTagName('a'))
+                    .map(a => a.href)
+                    .filter(href => href.endsWith('.json'));
+                
+                return links.map(link => `tradeups_data/${link}`);
             });
-        })
-        .catch(error => console.error('Error fetching data:', error));
+    }
+
+    // Function to fetch all JSON files
+    function loadAllTradeups() {
+        return getJsonFiles()
+            .then(jsonFiles => {
+                // Fetch all JSON files
+                const fetchPromises = jsonFiles.map(file => 
+                    fetch(file)
+                        .then(response => response.json())
+                        .catch(error => {
+                            console.error(`Error loading ${file}:`, error);
+                            return []; // Return empty array if file fails to load
+                        })
+                );
+
+                return Promise.all(fetchPromises);
+            })
+            .then(chunks => {
+                // Flatten the array of chunks
+                allTradeupData = chunks.flat();
+                
+                // Initial render
+                renderTradeups(allTradeupData);
+
+                // Setup sort functionality
+                const sortBySelect = document.getElementById('sort-by');
+                sortBySelect.addEventListener('change', function() {
+                    const sortBy = sortBySelect.value;
+                    sortTradeups(allTradeupData, sortBy);
+                });
+            })
+            .catch(error => console.error('Error loading tradeup data:', error));
+    }
+
+    // Call the load function
+    loadAllTradeups();
 });
 
 function renderTradeups(tradeups) {
