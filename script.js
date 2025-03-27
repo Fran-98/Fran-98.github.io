@@ -2,38 +2,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Array to hold all tradeup data
     let allTradeupData = [];
 
-    // Function to get all JSON files in the tradeups_data folder
-    function getJsonFiles() {
-        return fetch('tradeups_data/')
-            .then(response => response.text())
-            .then(text => {
-                // Parse the directory listing to extract JSON file names
-                const parser = new DOMParser();
-                const html = parser.parseFromString(text, 'text/html');
-                const links = Array.from(html.getElementsByTagName('a'))
-                    .map(a => a.href)
-                    .filter(href => href.endsWith('.json'));
-                
-                return links.map(link => `tradeups_data/${link}`);
-            });
-    }
+    // Predefined list of JSON files (you'll need to update this manually)
+    const jsonFiles = [
+        'tradeups_data/tradeups_chunk_0.json',
+        'tradeups_data/tradeups_chunk_1.json',
+        'tradeups_data/tradeups_chunk_2.json',
+        'tradeups_data/tradeups_chunk_3.json',
+        // Add all your JSON file paths here
+    ];
 
     // Function to fetch all JSON files
     function loadAllTradeups() {
-        return getJsonFiles()
-            .then(jsonFiles => {
-                // Fetch all JSON files
-                const fetchPromises = jsonFiles.map(file => 
-                    fetch(file)
-                        .then(response => response.json())
-                        .catch(error => {
-                            console.error(`Error loading ${file}:`, error);
-                            return []; // Return empty array if file fails to load
-                        })
-                );
+        // Fetch all JSON files
+        const fetchPromises = jsonFiles.map(file => 
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} for ${file}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error(`Error loading ${file}:`, error);
+                    return []; // Return empty array if file fails to load
+                })
+        );
 
-                return Promise.all(fetchPromises);
-            })
+        Promise.all(fetchPromises)
             .then(chunks => {
                 // Flatten the array of chunks
                 allTradeupData = chunks.flat();
@@ -55,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadAllTradeups();
 });
 
+// Rest of the script remains the same as in the original code
 function renderTradeups(tradeups) {
     const container = document.getElementById('tradeups-container');
     container.innerHTML = ''; // Clear any previous content
@@ -143,7 +139,6 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
     sectionContainer.appendChild(sectionDiv);
     return sectionContainer;
 }
-
 
 function sortTradeups(tradeups, sortBy) {
     tradeups.sort((a, b) => {
