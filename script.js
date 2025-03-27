@@ -1,74 +1,52 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
+    // Array to hold all tradeup data
     let allTradeupData = [];
-    let currentBatchIndex = 0;
-    const batchSize = 20; // Number of tradeups to load per batch
 
+    // Predefined list of JSON files (you'll need to update this manually)
     const jsonFiles = [
         'tradeups_data/tradeups_chunk_0.json',
         'tradeups_data/tradeups_chunk_1.json',
-        'tradeups_data/tradeups_chunk_2.json',
-        'tradeups_data/tradeups_chunk_3.json',
+        // 'tradeups_data/tradeups_chunk_2.json',
+        // 'tradeups_data/tradeups_chunk_3.json',
+        // Add all your JSON file paths here
     ];
 
+    // Function to fetch all JSON files
     function loadAllTradeups() {
-        const fetchPromises = jsonFiles.map(file =>
+        // Fetch all JSON files
+        const fetchPromises = jsonFiles.map(file => 
             fetch(file)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} for ${file}`);
+                    }
+                    return response.json();
+                })
                 .catch(error => {
                     console.error(`Error loading ${file}:`, error);
-                    return [];
+                    return []; // Return empty array if file fails to load
                 })
         );
 
-        Promise.all(fetchPromises).then(chunks => {
-            allTradeupData = chunks.flat();
-            renderTradeupsBatch(); // Render initial batch
+        Promise.all(fetchPromises)
+            .then(chunks => {
+                // Flatten the array of chunks
+                allTradeupData = chunks.flat();
+                
+                // Initial render
+                renderTradeups(allTradeupData);
 
-            // Enable sorting
-            document.getElementById('sort-by').addEventListener('change', function () {
-                sortTradeups(allTradeupData, this.value);
-                resetTradeupDisplay();
-            });
-        });
+                // Setup sort functionality
+                const sortBySelect = document.getElementById('sort-by');
+                sortBySelect.addEventListener('change', function() {
+                    const sortBy = sortBySelect.value;
+                    sortTradeups(allTradeupData, sortBy);
+                });
+            })
+            .catch(error => console.error('Error loading tradeup data:', error));
     }
 
-    function renderTradeupsBatch() {
-        const container = document.getElementById('tradeups-container');
-        const nextBatch = allTradeupData.slice(currentBatchIndex, currentBatchIndex + batchSize);
-
-        nextBatch.forEach((tradeup, index) => {
-            container.appendChild(createTradeupElement(tradeup, currentBatchIndex + index));
-        });
-
-        currentBatchIndex += batchSize;
-        if (currentBatchIndex >= allTradeupData.length) {
-            document.getElementById('load-more-btn').style.display = 'none';
-        }
-    }
-
-    function resetTradeupDisplay() {
-        currentBatchIndex = 0;
-        document.getElementById('tradeups-container').innerHTML = "";
-        renderTradeupsBatch();
-    }
-
-    function createTradeupElement(tradeup, index) {
-        const tradeupDiv = document.createElement('div');
-        tradeupDiv.className = 'tradeup-item';
-        tradeupDiv.innerHTML = `
-            <h2>Tradeup-N°${index + 1}</h2>
-            <div class="tradeup-details">
-                <p><strong>Odds:</strong> ${tradeup.odds_to_profit.toFixed(2)} %</p>
-                <p><strong>Cost:</strong> $${tradeup.tradeup_cost.toFixed(2)}</p>
-                <p><strong>Profitability:</strong> ${(tradeup.profitability + 100).toFixed(2)} %</p>
-                <p><strong>Profit per trade:</strong> $${tradeup.tradeup_profit.toFixed(2)}</p>
-            </div>
-        `;
-        return tradeupDiv;
-    }
-
-    document.getElementById('load-more-btn').addEventListener('click', renderTradeupsBatch);
-    
+    // Call the load function
     loadAllTradeups();
 });
 
@@ -133,35 +111,38 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
     sectionDiv.className = `tradeup-section ${isOutput ? 'outputs' : 'inputs'}`; 
 
     skins.forEach(skin => {
-        let quantity = isOutput ? 1 : skin.times || 1; // Output skins appear once, input skins can repeat
-        
-        for (let i = 0; i < quantity; i++) {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'item';
-            let price = isOutput ? skin.sell_price : skin.buy_price;
-            let additionalInfo = '';
-            
-            if (isOutput && skin.chance) {
-                additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
-            }
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        let price = isOutput ? skin.sell_price : skin.buy_price;
+        let additionalInfo = '';
+        let timesInfo = '';
 
-            let frameBackground = '';
-            if (isOutput && tradeupCost !== 0) {
-                frameBackground = (skin.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)';
-            }
-
-            itemDiv.innerHTML = `
-                <div class="skin-frame" style="background-color: ${frameBackground};">
-                    <img src="${skin.image}" alt="${skin.name}">
-                    <p>${skin.name}</p>
-                    <p>Collection: ${skin.collection_name}</p>
-                    <p>Float: ${skin.float.toFixed(8)}</p>
-                    <p>Price: $${price.toFixed(2)}</p>
-                    ${additionalInfo}
-                </div>
-            `;
-            sectionDiv.appendChild(itemDiv);
+        // Handle the new 'times' key for input skins
+        if (!isOutput && skin.times && skin.times > 1) {
+            timesInfo = `<p><strong>Quantity:</strong> ${skin.times}</p>`;
         }
+
+        if (isOutput && skin.chance) {
+            additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
+        }
+
+        let frameBackground = '';
+        if (isOutput && tradeupCost !== 0) {
+            frameBackground = (skin.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)';
+        }
+
+        itemDiv.innerHTML = `
+            <div class="skin-frame" style="background-color: ${frameBackground};">
+                <img src="${skin.image}" alt="${skin.name}">
+                <p>${skin.name}</p>
+                <p>Collection: ${skin.collection_name}</p>
+                <p>Float: ${skin.float.toFixed(8)}</p>
+                <p>Price: $${price.toFixed(2)}</p>
+                ${timesInfo}
+                ${additionalInfo}
+            </div>
+        `;
+        sectionDiv.appendChild(itemDiv);
     });
 
     sectionContainer.appendChild(sectionDiv);
