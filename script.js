@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadAllTradeups();
 });
 
-// Rest of the script remains the same as in the original code
 function renderTradeups(tradeups) {
     const container = document.getElementById('tradeups-container');
     container.innerHTML = ''; // Clear any previous content
@@ -116,13 +115,22 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
         itemDiv.className = 'item';
         let price = isOutput ? skin.sell_price : skin.buy_price;
         let additionalInfo = '';
+        let timesInfo = '';
+
+        // Handle the new 'times' key for input skins
+        if (!isOutput && skin.times && skin.times > 1) {
+            timesInfo = `<p><strong>Quantity:</strong> ${skin.times}</p>`;
+        }
+
         if (isOutput && skin.chance) {
             additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
         }
+
         let frameBackground = '';
         if (isOutput && tradeupCost !== 0) {
             frameBackground = (skin.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)';
         }
+
         itemDiv.innerHTML = `
             <div class="skin-frame" style="background-color: ${frameBackground};">
                 <img src="${skin.image}" alt="${skin.name}">
@@ -130,6 +138,7 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
                 <p>Collection: ${skin.collection_name}</p>
                 <p>Float: ${skin.float.toFixed(8)}</p>
                 <p>Price: $${price.toFixed(2)}</p>
+                ${timesInfo}
                 ${additionalInfo}
             </div>
         `;
