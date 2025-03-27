@@ -1,7 +1,5 @@
 {
     "files": [
-        "tradeup_chunk_0.json",
-        "tradeup_chunk_1.json",
-        "tradeup_chunk_2.json"
+        "tradeups_data/*"
     ]
 }
