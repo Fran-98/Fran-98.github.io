@@ -1,52 +1,74 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Array to hold all tradeup data
+document.addEventListener('DOMContentLoaded', function () {
     let allTradeupData = [];
+    let currentBatchIndex = 0;
+    const batchSize = 20; // Number of tradeups to load per batch
 
-    // Predefined list of JSON files (you'll need to update this manually)
     const jsonFiles = [
         'tradeups_data/tradeups_chunk_0.json',
         'tradeups_data/tradeups_chunk_1.json',
         'tradeups_data/tradeups_chunk_2.json',
         'tradeups_data/tradeups_chunk_3.json',
-        // Add all your JSON file paths here
     ];
 
-    // Function to fetch all JSON files
     function loadAllTradeups() {
-        // Fetch all JSON files
-        const fetchPromises = jsonFiles.map(file => 
+        const fetchPromises = jsonFiles.map(file =>
             fetch(file)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status} for ${file}`);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .catch(error => {
                     console.error(`Error loading ${file}:`, error);
-                    return []; // Return empty array if file fails to load
+                    return [];
                 })
         );
 
-        Promise.all(fetchPromises)
-            .then(chunks => {
-                // Flatten the array of chunks
-                allTradeupData = chunks.flat();
-                
-                // Initial render
-                renderTradeups(allTradeupData);
+        Promise.all(fetchPromises).then(chunks => {
+            allTradeupData = chunks.flat();
+            renderTradeupsBatch(); // Render initial batch
 
-                // Setup sort functionality
-                const sortBySelect = document.getElementById('sort-by');
-                sortBySelect.addEventListener('change', function() {
-                    const sortBy = sortBySelect.value;
-                    sortTradeups(allTradeupData, sortBy);
-                });
-            })
-            .catch(error => console.error('Error loading tradeup data:', error));
+            // Enable sorting
+            document.getElementById('sort-by').addEventListener('change', function () {
+                sortTradeups(allTradeupData, this.value);
+                resetTradeupDisplay();
+            });
+        });
     }
 
-    // Call the load function
+    function renderTradeupsBatch() {
+        const container = document.getElementById('tradeups-container');
+        const nextBatch = allTradeupData.slice(currentBatchIndex, currentBatchIndex + batchSize);
+
+        nextBatch.forEach((tradeup, index) => {
+            container.appendChild(createTradeupElement(tradeup, currentBatchIndex + index));
+        });
+
+        currentBatchIndex += batchSize;
+        if (currentBatchIndex >= allTradeupData.length) {
+            document.getElementById('load-more-btn').style.display = 'none';
+        }
+    }
+
+    function resetTradeupDisplay() {
+        currentBatchIndex = 0;
+        document.getElementById('tradeups-container').innerHTML = "";
+        renderTradeupsBatch();
+    }
+
+    function createTradeupElement(tradeup, index) {
+        const tradeupDiv = document.createElement('div');
+        tradeupDiv.className = 'tradeup-item';
+        tradeupDiv.innerHTML = `
+            <h2>Tradeup-N°${index + 1}</h2>
+            <div class="tradeup-details">
+                <p><strong>Odds:</strong> ${tradeup.odds_to_profit.toFixed(2)} %</p>
+                <p><strong>Cost:</strong> $${tradeup.tradeup_cost.toFixed(2)}</p>
+                <p><strong>Profitability:</strong> ${(tradeup.profitability + 100).toFixed(2)} %</p>
+                <p><strong>Profit per trade:</strong> $${tradeup.tradeup_profit.toFixed(2)}</p>
+            </div>
+        `;
+        return tradeupDiv;
+    }
+
+    document.getElementById('load-more-btn').addEventListener('click', renderTradeupsBatch);
+    
     loadAllTradeups();
 });
 
