@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // ... (keep the rest of your existing variables and functions) ...
 
     // Array global para acumular los datos cargados
@@ -94,87 +94,87 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else {
             // Si quedan items por renderizar, asegúrate que el botón está visible
-             if (loadMoreButton) loadMoreButton.style.display = 'block';
+            if (loadMoreButton) loadMoreButton.style.display = 'block';
         }
     }
 
     // --- createTradeupElement y createSkinsSection sin cambios ---
     // ... (pega tus funciones createTradeupElement y createSkinsSection aquí) ...
-        // Función para crear el elemento de cada tradeup (manteniendo el formato)
-        function createTradeupElement(tradeup, index) {
-                const tradeupDiv = document.createElement('div');
-                tradeupDiv.className = 'tradeup-item';
+    // Función para crear el elemento de cada tradeup (manteniendo el formato)
+    function createTradeupElement(tradeup, index) {
+        const tradeupDiv = document.createElement('div');
+        tradeupDiv.className = 'tradeup-item';
 
-                // Cabecera del tradeup: nombre y detalles
-                const tradeupHeader = document.createElement('div');
-                tradeupHeader.className = 'tradeup-header';
+        // Cabecera del tradeup: nombre y detalles
+        const tradeupHeader = document.createElement('div');
+        tradeupHeader.className = 'tradeup-header';
 
-                const nameHeading = document.createElement('h2');
-                nameHeading.textContent = `Tradeup-N°${index + 1}`;
+        const nameHeading = document.createElement('h2');
+        nameHeading.textContent = `Tradeup-N°${index + 1}`;
 
-                const detailsDiv = document.createElement('div');
-                detailsDiv.className = 'tradeup-details';
-                detailsDiv.innerHTML = `         
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'tradeup-details';
+        detailsDiv.innerHTML = `         
                     <p><strong>Odds:</strong> ${tradeup.odds_to_profit ? tradeup.odds_to_profit.toFixed(2) : 'N/A'} %</p>
                     <p><strong>Cost:</strong> $${tradeup.tradeup_cost ? tradeup.tradeup_cost.toFixed(2) : 'N/A'}</p>
                     <p><strong>Profitability:</strong> ${tradeup.profitability ? (tradeup.profitability + 100).toFixed(2) : 'N/A'} %</p>
                     <p><strong>Profit per trade:</strong> $${tradeup.mean_profit ? tradeup.mean_profit.toFixed(2) : 'N/A'}</p>
                 `;
 
-                tradeupHeader.appendChild(detailsDiv);
-                tradeupHeader.appendChild(nameHeading);
+        tradeupHeader.appendChild(detailsDiv);
+        tradeupHeader.appendChild(nameHeading);
 
-                tradeupDiv.appendChild(tradeupHeader);
+        tradeupDiv.appendChild(tradeupHeader);
 
-                // Secciones de skins: inputs y outputs
-                const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs', false);
-                const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost);
+        // Secciones de skins: inputs y outputs
+        const inputsDiv = createSkinsSection(tradeup.input_skins, 'Inputs', false);
+        const outputsDiv = createSkinsSection(tradeup.output_skins, 'Outputs', true, tradeup.tradeup_cost);
 
-                // Contenedor para las secciones de inputs y outputs (flex)
-                const sectionsContainer = document.createElement('div');
-                sectionsContainer.className = 'sections-container'; // Nuevo contenedor
-                sectionsContainer.appendChild(inputsDiv);
-                sectionsContainer.appendChild(outputsDiv);
-                tradeupDiv.appendChild(sectionsContainer);
+        // Contenedor para las secciones de inputs y outputs (flex)
+        const sectionsContainer = document.createElement('div');
+        sectionsContainer.className = 'sections-container'; // Nuevo contenedor
+        sectionsContainer.appendChild(inputsDiv);
+        sectionsContainer.appendChild(outputsDiv);
+        tradeupDiv.appendChild(sectionsContainer);
 
-                return tradeupDiv;
-            }
+        return tradeupDiv;
+    }
 
-            // Función para crear la sección de skins (mantiene la repetición según "times")
-            function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
-                const sectionContainer = document.createElement('div');
-                sectionContainer.className = 'tradeup-section-container';
+    // Función para crear la sección de skins (mantiene la repetición según "times")
+    function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
+        const sectionContainer = document.createElement('div');
+        sectionContainer.className = 'tradeup-section-container';
 
-                // Título de la sección
-                const titleHeading = document.createElement('h3');
-                titleHeading.className = 'section-title';
-                titleHeading.textContent = title;
-                sectionContainer.appendChild(titleHeading);
+        // Título de la sección
+        const titleHeading = document.createElement('h3');
+        titleHeading.className = 'section-title';
+        titleHeading.textContent = title;
+        sectionContainer.appendChild(titleHeading);
 
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = `tradeup-section ${isOutput ? 'outputs' : 'inputs'}`;
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = `tradeup-section ${isOutput ? 'outputs' : 'inputs'}`;
 
-                skins.forEach(skin => {
-                    // Para skins de entrada se utiliza "times"; para salida, siempre 1
-                    let quantity = isOutput ? 1 : (skin.times || 1);
-                    for (let i = 0; i < quantity; i++) {
-                        const itemDiv = document.createElement('div');
-                        itemDiv.className = 'item';
-                        let price = isOutput ? skin.sell_price : skin.buy_price;
-                        let additionalInfo = '';
+        skins.forEach(skin => {
+            // Para skins de entrada se utiliza "times"; para salida, siempre 1
+            let quantity = isOutput ? 1 : (skin.times || 1);
+            for (let i = 0; i < quantity; i++) {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                let price = isOutput ? skin.sell_price : skin.buy_price;
+                let additionalInfo = '';
 
-                        if (isOutput && skin.chance) {
-                            additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
-                        }
+                if (isOutput && skin.chance) {
+                    additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
+                }
 
-                        let frameBackground = '';
-                        if (isOutput && tradeupCost !== 0) {
-                            frameBackground = (skin.sell_price > (tradeupCost / 10))
-                                ? 'rgba(144, 238, 144, 0.3)'
-                                : 'rgba(250, 128, 114, 0.3)';
-                        }
+                let frameBackground = '';
+                if (isOutput && tradeupCost !== 0) {
+                    frameBackground = (skin.sell_price > tradeupCost)
+                        ? 'rgba(144, 238, 144, 0.3)'
+                        : 'rgba(250, 128, 114, 0.3)';
+                }
 
-                        itemDiv.innerHTML = `
+                itemDiv.innerHTML = `
                             <div class="skin-frame" style="background-color: ${frameBackground};">
                                 <img src="${skin.image}" alt="${skin.name}" loading="lazy">
                                 <p>${skin.name}</p>
@@ -184,13 +184,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                 ${additionalInfo}
                             </div>
                         `;
-                        sectionDiv.appendChild(itemDiv);
-                    }
-                });
+                sectionDiv.appendChild(itemDiv);
+            }
+        });
 
-                sectionContainer.appendChild(sectionDiv);
-                return sectionContainer;
-            }
+        sectionContainer.appendChild(sectionDiv);
+        return sectionContainer;
+    }
     // --- Fin de createTradeupElement y createSkinsSection ---
 
     // Función para ordenar los tradeups (con opción de no reiniciar renderizado)
@@ -203,10 +203,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     valB = b.odds_to_profit ?? -Infinity;
                     break;
                 case 'cost':
-                     // Ordenar por costo ascendente (más barato primero)
-                     valA = a.tradeup_cost ?? Infinity;
-                     valB = b.tradeup_cost ?? Infinity;
-                     return valA - valB; // Cambio aquí para ascendente
+                    // Ordenar por costo ascendente (más barato primero)
+                    valA = a.tradeup_cost ?? Infinity;
+                    valB = b.tradeup_cost ?? Infinity;
+                    return valA - valB; // Cambio aquí para ascendente
                 case 'profitPerTrade':
                     valA = a.mean_profit ?? -Infinity;
                     valB = b.mean_profit ?? -Infinity;
@@ -217,8 +217,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     valB = b.profitability ?? -Infinity;
                     break;
             }
-             // Orden descendente por defecto (excepto costo)
-             return valB - valA;
+            // Orden descendente por defecto (excepto costo)
+            return valB - valA;
         });
 
         if (shouldRender) {
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         isLoading = true;
-        if(loadMoreButton) loadMoreButton.disabled = true; // Deshabilita el botón durante la carga
+        if (loadMoreButton) loadMoreButton.disabled = true; // Deshabilita el botón durante la carga
 
         console.log("Load more handler triggered.");
 
@@ -252,26 +252,26 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Attempting to load next JSON file.");
             const loaded = await loadNextJsonFile();
             // Si la carga falló o no había más archivos, y no hay NADA renderizado aún, mostrar mensaje
-             if (!loaded && currentBatchIndex === 0 && allTradeupData.length === 0) {
-                 container.innerHTML = '<p>Error loading initial data or no data available.</p>';
-                 if (loadMoreButton) loadMoreButton.style.display = 'none'; // Oculta el botón si falla la carga inicial
-                 isLoading = false;
-                 if(loadMoreButton) loadMoreButton.disabled = false;
-                 return; // Salir si falla la carga inicial
-             }
+            if (!loaded && currentBatchIndex === 0 && allTradeupData.length === 0) {
+                container.innerHTML = '<p>Error loading initial data or no data available.</p>';
+                if (loadMoreButton) loadMoreButton.style.display = 'none'; // Oculta el botón si falla la carga inicial
+                isLoading = false;
+                if (loadMoreButton) loadMoreButton.disabled = false;
+                return; // Salir si falla la carga inicial
+            }
         }
 
         // Renderiza el siguiente lote disponible (con los datos recién cargados o los existentes)
         renderTradeupsBatch();
 
         isLoading = false; // Marca la carga como completa
-        if(loadMoreButton) loadMoreButton.disabled = false; // Rehabilita el botón
+        if (loadMoreButton) loadMoreButton.disabled = false; // Rehabilita el botón
 
-         // Vuelve a verificar si el botón debe estar oculto después de renderizar
-         if (currentBatchIndex >= allTradeupData.length && currentJsonIndex >= jsonFiles.length) {
-             if (loadMoreButton) loadMoreButton.style.display = 'none';
-             console.log("All data loaded and rendered after loadMoreHandler.");
-         }
+        // Vuelve a verificar si el botón debe estar oculto después de renderizar
+        if (currentBatchIndex >= allTradeupData.length && currentJsonIndex >= jsonFiles.length) {
+            if (loadMoreButton) loadMoreButton.style.display = 'none';
+            console.log("All data loaded and rendered after loadMoreHandler.");
+        }
     }
 
     // --- IntersectionObserver Setup ---
@@ -285,18 +285,18 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             // Llama a loadMoreHandler SOLO si el botón está visible Y no estamos ya al final de los datos
             if (entry.isIntersecting && !isLoading) {
-                 // Verifica si realmente hay más por cargar o renderizar
-                 const moreToRender = currentBatchIndex < allTradeupData.length;
-                 const moreToLoad = currentJsonIndex < jsonFiles.length;
-                 if (moreToRender || moreToLoad) {
-                     console.log("Observer triggered loadMoreHandler.");
-                     loadMoreHandler();
-                 } else {
-                     console.log("Observer detected button, but no more data to load or render.");
-                     // Opcional: Desconectar el observer si ya no hay más datos
-                     // observer.unobserve(entry.target);
-                     // if(loadMoreButton) loadMoreButton.style.display = 'none';
-                 }
+                // Verifica si realmente hay más por cargar o renderizar
+                const moreToRender = currentBatchIndex < allTradeupData.length;
+                const moreToLoad = currentJsonIndex < jsonFiles.length;
+                if (moreToRender || moreToLoad) {
+                    console.log("Observer triggered loadMoreHandler.");
+                    loadMoreHandler();
+                } else {
+                    console.log("Observer detected button, but no more data to load or render.");
+                    // Opcional: Desconectar el observer si ya no hay más datos
+                    // observer.unobserve(entry.target);
+                    // if(loadMoreButton) loadMoreButton.style.display = 'none';
+                }
             }
         });
     };
@@ -308,8 +308,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Evento para el botón "Load More" (como fallback o si el observer falla)
     if (loadMoreButton) {
         loadMoreButton.addEventListener('click', () => {
-             console.log("Manual button click.");
-             loadMoreHandler();
+            console.log("Manual button click.");
+            loadMoreHandler();
         });
         // Start observing the button
         observer.observe(loadMoreButton); // <<< OBSERVE THE BUTTON
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Evento para el select de ordenación
     if (sortBySelect) {
-        sortBySelect.addEventListener('change', function() {
+        sortBySelect.addEventListener('change', function () {
             sortTradeups(allTradeupData, this.value, true); // true = reiniciar renderizado
         });
     }
@@ -330,18 +330,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Carga el primer archivo JSON y luego renderiza el primer batch
     loadNextJsonFile().then((loaded) => {
         if (loaded) {
-             // Ordena inicialmente por el valor por defecto del select ('profitability')
-             sortTradeups(allTradeupData, sortBySelect.value, false); // Ordena sin renderizar aún
-             renderTradeupsBatch(); // Renderiza el primer batch ordenado
+            // Ordena inicialmente por el valor por defecto del select ('profitability')
+            sortTradeups(allTradeupData, sortBySelect.value, false); // Ordena sin renderizar aún
+            renderTradeupsBatch(); // Renderiza el primer batch ordenado
         } else {
             // Maneja el fallo de carga inicial
             container.innerHTML = '<p>Failed to load initial tradeup data.</p>';
             if (loadMoreButton) loadMoreButton.style.display = 'none';
         }
     }).catch(error => {
-         console.error("Error during initial load:", error);
-         container.innerHTML = '<p>Error loading initial data.</p>';
-         if (loadMoreButton) loadMoreButton.style.display = 'none';
+        console.error("Error during initial load:", error);
+        container.innerHTML = '<p>Error loading initial data.</p>';
+        if (loadMoreButton) loadMoreButton.style.display = 'none';
     });
 
 }); // End of DOMContentLoaded
