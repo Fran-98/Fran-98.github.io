@@ -111,38 +111,41 @@ function createSkinsSection(skins, title, isOutput = false, tradeupCost = 0) {
     sectionDiv.className = `tradeup-section ${isOutput ? 'outputs' : 'inputs'}`; 
 
     skins.forEach(skin => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item';
-        let price = isOutput ? skin.sell_price : skin.buy_price;
-        let additionalInfo = '';
-        let timesInfo = '';
+        // Determine how many times to render the skin
+        const timesToRender = !isOutput && skin.times ? skin.times : 1;
 
-        // Handle the new 'times' key for input skins
-        if (!isOutput && skin.times && skin.times > 1) {
-            timesInfo = `<p><strong>Quantity:</strong> ${skin.times}</p>`;
+        // Create a copy of the skin without the 'times' key for rendering
+        const skinToRender = {...skin};
+        delete skinToRender.times;
+
+        // Render the skin multiple times
+        for (let i = 0; i < timesToRender; i++) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item';
+            let price = isOutput ? skinToRender.sell_price : skinToRender.buy_price;
+            let additionalInfo = '';
+
+            if (isOutput && skinToRender.chance) {
+                additionalInfo = `<p>Chance: ${(skinToRender.chance * 100).toFixed(2)}%</p>`;
+            }
+
+            let frameBackground = '';
+            if (isOutput && tradeupCost !== 0) {
+                frameBackground = (skinToRender.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)';
+            }
+
+            itemDiv.innerHTML = `
+                <div class="skin-frame" style="background-color: ${frameBackground};">
+                    <img src="${skinToRender.image}" alt="${skinToRender.name}">
+                    <p>${skinToRender.name}</p>
+                    <p>Collection: ${skinToRender.collection_name}</p>
+                    <p>Float: ${skinToRender.float.toFixed(8)}</p>
+                    <p>Price: $${price.toFixed(2)}</p>
+                    ${additionalInfo}
+                </div>
+            `;
+            sectionDiv.appendChild(itemDiv);
         }
-
-        if (isOutput && skin.chance) {
-            additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
-        }
-
-        let frameBackground = '';
-        if (isOutput && tradeupCost !== 0) {
-            frameBackground = (skin.sell_price > tradeupCost) ? 'rgba(144, 238, 144, 0.3)' : 'rgba(250, 128, 114, 0.3)';
-        }
-
-        itemDiv.innerHTML = `
-            <div class="skin-frame" style="background-color: ${frameBackground};">
-                <img src="${skin.image}" alt="${skin.name}">
-                <p>${skin.name}</p>
-                <p>Collection: ${skin.collection_name}</p>
-                <p>Float: ${skin.float.toFixed(8)}</p>
-                <p>Price: $${price.toFixed(2)}</p>
-                ${timesInfo}
-                ${additionalInfo}
-            </div>
-        `;
-        sectionDiv.appendChild(itemDiv);
     });
 
     sectionContainer.appendChild(sectionDiv);
