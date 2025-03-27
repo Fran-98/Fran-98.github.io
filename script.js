@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Lista de archivos JSON a cargar (ajusta según necesites)
     const jsonFiles = [
         'tradeups_data/tradeups_chunk_0.json',
-        'tradeups_data/tradeups_chunk_1.json',
-        'tradeups_data/tradeups_chunk_2.json',
-        'tradeups_data/tradeups_chunk_3.json',
+        // 'tradeups_data/tradeups_chunk_1.json',
+        // 'tradeups_data/tradeups_chunk_2.json',
+        // 'tradeups_data/tradeups_chunk_3.json',
         // Agrega más rutas de archivos JSON si es necesario
     ];
 
