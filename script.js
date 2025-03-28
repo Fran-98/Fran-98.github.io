@@ -282,6 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
                if (isOutput && skin.chance != null) {
                    additionalInfo = `<p>Chance: ${(skin.chance * 100).toFixed(2)}%</p>`;
                }
+               
 
                let frameBackground = 'transparent'; // Default background
                 if (isOutput && tradeupCost != null && tradeupCost !== 0 && skin.sell_price != null) {
@@ -306,10 +307,16 @@ document.addEventListener('DOMContentLoaded', function () {
                const displayPrice = typeof price === 'number' ? price.toFixed(2) : 'N/A';
                const collectionName = skin.collection_name || 'N/A';
 
+               if (isOutput && skin.chance != null) {
+                priceInfo = `<p>Sell Price: $${displayPrice}</p>`;
+                }
+                else{
+                priceInfo = `<p>Price: $${displayPrice}</p>`;
+                }
                itemFrameDiv.innerHTML = `
                        <img src="${skin.image}" alt="${skin.name}" loading="lazy">
                        <p title="${skin.name}">${skin.name}</p> <p>Coll: ${collectionName}</p> <p>Float: ${displayFloat}</p>
-                       <p>Price: $${displayPrice}</p>
+                       ${priceInfo}
                        ${additionalInfo}
                        `;
                sectionGridDiv.appendChild(itemFrameDiv); // Add frame to the grid
