@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let isLoading = false;
 
     const jsonFiles = [
-        'tradeups_data/tradeups_chunk_0.json',
+        'tradeups_data/tradeups_0.json',
         // 'tradeups_data/tradeups_chunk_1.json',
         // ...
     ];
