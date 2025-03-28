@@ -8,19 +8,8 @@ body.dark-theme a {
     color: #81d4fa;
 }
 
-body.dark-theme .tradeup-item {
-    border: 1px solid #333;
-    background-color: #1e1e1e;
-    display: flex;
-    flex-direction: column; /* Stack everything vertically */
-    padding: 20px;
-    margin-bottom: 20px;
-    gap: 20px;
-    overflow: hidden; /* Prevent overflow */
-    position: relative;
-}
+/* === Keep Original Styles Intact === */
 
-/* General Body and Layout */
 body {
     font-family: sans-serif;
     margin: 0;
@@ -32,21 +21,21 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    font-size: 0.9em; /* Slightly smaller font */
+    font-size: 0.9em;
 }
 
 .support-section {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px; /* Reduce space between elements */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 15px;
+    flex-wrap: wrap;
     text-align: center;
 }
 
 .support-section p {
-    margin: 0 5px; /* Reduce margins */
-    line-height: 1.3; /* Tighten line spacing */
+    margin: 0 5px;
+    line-height: 1.3;
 }
 
 .support-section a {
@@ -62,17 +51,68 @@ body {
 
 .content {
     padding: 20px;
-    margin-top: 60px;
+    /* margin-top: 60px; */ /* Remove or adjust if topbar height changes */
 }
 
-/* Tradeup Section Container */
+/* Tradeup Item (Dark Theme Override & Base) */
+.tradeup-item { /* Base styles */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    /* background-color: #fff; */ /* Let dark theme override */
+    gap: 20px;
+    position: relative;
+    border: 1px solid transparent; /* Base border */
+}
+body.dark-theme .tradeup-item { /* Dark theme specific */
+    border: 1px solid #333;
+    background-color: #1e1e1e;
+}
+
+
+.tradeup-item h2 {
+    margin-bottom: 10px; /* Original had margin-top: 0; margin-bottom: 15px; */
+    font-size: 1.5em;
+    order: 1; /* Place heading after details in flex */
+}
+
+.tradeup-item .tradeup-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px;
+    border-bottom: 1px solid #333; /* Dark theme border */
+    padding-bottom: 10px;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+}
+body.dark-theme .tradeup-item .tradeup-header {
+    border-bottom-color: #333; /* Ensure dark theme border */
+}
+
+.tradeup-item .tradeup-details {
+    display: flex;
+    flex-direction: column; /* Stack details vertically */
+    gap: 5px; /* Reduced gap */
+    text-align: left;
+    order: 0; /* Place details before heading in flex */
+    flex-shrink: 0; /* Prevent details from shrinking too much */
+}
+
+.tradeup-item .tradeup-details p {
+    margin: 0;
+    white-space: nowrap; /* Prevent details wrapping */
+}
+
+
 .tradeup-section-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-/* Section Title */
 .section-title {
     text-align: center;
     margin-bottom: 10px;
@@ -80,132 +120,299 @@ body {
     font-weight: bold;
 }
 
-/* Tradeup Item */
-.tradeup-item {
-    display: flex;
-    flex-direction: column; /* Stack the contents vertically */
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background-color: #fff;
-    gap: 20px;
-    position: relative;
-}
-
-.tradeup-item h2 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-}
-
-.tradeup-item .tradeup-header {
-    display: flex;
-    flex-direction: row; /* Align details horizontally */
-    justify-content: space-between;
-    gap: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-}
-
-.tradeup-item .tradeup-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: left;
-}
-
-.tradeup-item .tradeup-details p {
-    margin: 0;
-}
-
-/* Inputs and Outputs Section */
 .tradeup-section {
     display: grid;
     gap: 10px;
     width: 100%;
 }
 
-/* Inputs Section - 5x2 Grid */
 .tradeup-item .inputs {
-    grid-template-columns: repeat(5, 1fr); /* 5 columns for inputs */
-    grid-gap: 10px; /* Proper gap between items */
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* More responsive grid */
 }
 
-/* Outputs Section - 3xN Grid */
 .tradeup-item .outputs {
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for outputs */
-    grid-gap: 10px; /* Proper gap between items */
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* More responsive grid */
 }
 
-/* Skin Item Styling */
+
+/* Skin Item Styling (Dark Theme Aware) */
 .skin-frame {
-    border: 1px solid #333;
+    border: 1px solid #333; /* Dark theme border */
     padding: 10px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: transparent; /* Transparent background for input skins */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    min-height: 180px; /* Ensure frames have a minimum height */
+    justify-content: space-between; /* Space out content vertically */
 }
+
+/* Default output background in dark theme should be slightly different if needed */
+body.dark-theme .tradeup-item .outputs .skin-frame {
+     background-color: rgba(255, 255, 255, 0.03); /* Very subtle background for outputs */
+}
+/* Input skins remain transparent */
+body.dark-theme .tradeup-item .inputs .skin-frame {
+    background-color: transparent;
+}
+
+
+/* Profit/Loss background colors defined in JS should work okay */
 
 .skin-frame img {
     max-width: 100px;
-    height: auto;
-    margin-bottom: 10px;
+    height: auto; /* Maintain aspect ratio */
+    max-height: 70px; /* Limit image height */
+    object-fit: contain; /* Ensure image fits well */
+    margin-bottom: 5px;
 }
 
 .skin-frame p {
-    margin: 5px 0;
+    margin: 2px 0; /* Reduced margin */
     text-align: center;
+    font-size: 0.85em; /* Slightly smaller font */
+    line-height: 1.2;
 }
 
-/* Change background color of input skins to dark gray */
-.tradeup-item .inputs .skin-frame {
-    background-color: transparent; /* Ensures input skins stay transparent */
+/* Hover effect */
+body.dark-theme .skin-frame:hover {
+    background-color: rgba(255, 255, 255, 0.08); /* Slightly more visible hover */
+}
+body.dark-theme .tradeup-item .inputs .skin-frame:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle hover even for inputs */
 }
 
-/* Change background color of output skins based on profitability */
-.tradeup-item .outputs .skin-frame {
-    background-color: #f9f9f9; /* Default background for output skins */
+/* Load More Button */
+.load-more-container {
+    text-align: center;
+    margin-top: 20px;
+}
+#load-more-btn {
+     padding: 10px 20px;
+     background-color: #4CAF50; /* Green */
+     color: white;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 1em;
+     transition: background-color 0.3s ease;
+}
+#load-more-btn:hover {
+    background-color: #45a049;
+}
+#load-more-btn:disabled {
+    background-color: #555;
+    cursor: not-allowed;
 }
 
-/* Add subtle hover effect on skin items */
-.skin-frame:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Subtle darken effect on hover */
+
+/* === START: New Styles for Controls === */
+
+.controls-container {
+    background-color: #1e1e1e; /* Match item background */
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column; /* Stack sort and filter vertically */
+    gap: 15px;
 }
 
-/* Add hover effect for input skins to stay transparent */
-.tradeup-item .inputs .skin-frame:hover {
-    background-color: transparent; /* No hover effect for input skins */
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; /* Allow wrapping if needed */
 }
 
-/* Media Query for Smaller Screens */
+.sort-controls label {
+    font-weight: bold;
+    white-space: nowrap; /* Prevent label wrapping */
+}
+
+.sort-controls select {
+    padding: 8px 12px;
+    background-color: #2a2a2a; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    border: 1px solid #444; /* Subtle border */
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+#filter-controls {
+    display: flex;
+    flex-wrap: wrap; /* Allow filter groups to wrap onto next line */
+    gap: 15px; /* Gap between filter groups */
+    align-items: center; /* Align items vertically */
+}
+
+.filter-group {
+    display: flex;
+    align-items: center; /* Align label, inputs, span horizontally */
+    gap: 5px; /* Space between label, inputs, span */
+    background-color: #2a2a2a; /* Background for the group */
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #444;
+}
+
+.filter-group label {
+    font-size: 0.85em;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 3px; /* Space after label */
+}
+
+.filter-group input[type="number"] {
+    width: 75px; /* Adjust width as needed */
+    padding: 6px 8px;
+    background-color: #1e1e1e; /* Darker input background */
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 3px;
+    font-size: 0.9em;
+    text-align: center;
+    -moz-appearance: textfield; /* Hide spinners Firefox */
+}
+.filter-group input[type="number"]::-webkit-outer-spin-button,
+.filter-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Hide spinners Webkit */
+    margin: 0;
+}
+
+.filter-group span {
+    color: #aaa; /* Color for the hyphen */
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: auto; /* Push buttons to the right on wider screens */
+}
+
+#filter-controls button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+#apply-filters-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+#apply-filters-btn:hover {
+    background-color: #45a049;
+}
+
+#clear-filters-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+#clear-filters-btn:hover {
+    background-color: #da190b;
+}
+
+/* === END: New Styles for Controls === */
+
+
+/* Media Query Adjustments (Include controls) */
 @media screen and (max-width: 768px) {
+     .content {
+        padding: 10px; /* Reduce padding on small screens */
+     }
+
     .tradeup-item {
         padding: 15px;
     }
 
-    /* Stack the input and output grids on smaller screens */
-    .tradeup-item .inputs {
-        grid-template-columns: repeat(3, 1fr); /* Adjust for smaller screens */
-    }
-
-    .tradeup-item .outputs {
-        grid-template-columns: repeat(2, 1fr); /* Adjust for smaller screens */
-    }
-
-    /* Stack the header details vertically on smaller screens */
     .tradeup-item .tradeup-header {
-        flex-direction: column;
-        gap: 10px;
+       /* Keep header row layout, but allow wrap */
+        gap: 15px;
     }
+     .tradeup-item h2 {
+        order: 0; /* Heading first on small screens */
+        width: 100%; /* Take full width */
+        text-align: center; /* Center heading */
+        margin-bottom: 10px;
+     }
+     .tradeup-item .tradeup-details {
+        order: 1; /* Details second */
+        width: 100%; /* Take full width */
+        flex-direction: row; /* Show details side-by-side */
+        flex-wrap: wrap; /* Allow wrapping */
+        justify-content: center; /* Center details */
+        gap: 8px 15px; /* Row and column gap */
+     }
+     .tradeup-item .tradeup-details p {
+        white-space: normal; /* Allow wrapping */
+     }
+
 
     .skin-frame img {
         max-width: 80px;
+        max-height: 50px; /* Further reduce image height */
     }
+     .skin-frame {
+        min-height: 150px; /* Adjust min height */
+     }
 
     .support-section {
         flex-direction: column;
         gap: 10px;
     }
+
+    /* Adjust controls layout */
+    .controls-container {
+        padding: 10px;
+    }
+
+    #filter-controls {
+        gap: 10px; /* Reduce gap */
+    }
+    .filter-group {
+        /* Groups might take full width implicitly due to wrapping */
+        padding: 4px 6px;
+    }
+     .filter-group input[type="number"] {
+        width: 65px; /* Smaller inputs */
+     }
+
+    .filter-buttons {
+        margin-left: 0; /* Remove margin */
+        width: 100%; /* Take full width */
+        justify-content: center; /* Center buttons */
+        margin-top: 5px; /* Add slight space if wrapped */
+    }
+}
+
+/* Even smaller screens */
+@media screen and (max-width: 480px) {
+     #filter-controls {
+        flex-direction: column; /* Stack filter groups vertically */
+        align-items: stretch; /* Make groups full width */
+     }
+     .filter-group {
+        justify-content: space-between; /* Space out elements in group */
+     }
+      .filter-group label {
+         flex-grow: 1; /* Allow label to take space */
+      }
+      .filter-group input[type="number"] {
+         width: 60px;
+      }
+      .filter-buttons {
+        flex-direction: column; /* Stack buttons */
+        align-items: stretch; /* Make buttons full width */
+        gap: 8px;
+      }
+      #filter-controls button {
+        width: 100%;
+      }
 }
